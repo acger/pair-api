@@ -1,0 +1,84 @@
+syntax = "v1"
+
+@server(
+    jwt: Auth
+    group: element
+)
+
+service pair-api {
+    @doc "添加元素"
+    @handler saveElementHandler
+    post /pair/element/save (eleSaveReq) returns (rsp)
+
+    @doc "查看元素"
+    @handler elementHandler
+    get /pair/element () returns (eleRsp)
+
+    @doc "元素列表"
+    @handler listElementHandler
+    get /pair/element/list (eleListReq) returns (eleListRsp)
+}
+
+@server(
+    jwt: Auth
+)
+
+service pair-api {
+    @doc "元素匹配"
+    @handler pairHandler
+    get /pair/element/pair () returns (eleListRsp)
+}
+
+type (
+    eleListRsp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        UserElement []*UserElement `json:"userElement"`
+        Page int64 `json:"page"`
+        PageSize int64 `json:"pageSize"`
+        Total int64 `json:"total"`
+    }
+
+    eleListReq {
+        Page int64 `json:"page,default=1"`
+        PageSize int64 `json:"pageSize,default=30"`
+        Keyword string `json:"keyword,optional"`
+        Mode string `json:"mode,optional"`
+    }
+
+    eleSaveReq {
+        Element []*Element `json:"element"`
+    }
+
+    eleRsp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Element []*Element `json:"element"`
+    }
+
+    pairReq {
+        Mode []string `json:"mode,optional"`
+    }
+
+    rsp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+    }
+)
+
+type (
+    Element {
+        Name string `json:"name"`
+        Mode string `json:"mode,default=past"`
+        Star bool `json:"star,optional"`
+        Sort int64 `json:"sort,optional"`
+    }
+
+    UserElement {
+        Id uint64 `json:"id"`
+        Name string `json:"name"`
+        Account string `json:"account"`
+        Avatar string `json:"avatar"`
+        Element []*Element `json:"element"`
+    }
+)

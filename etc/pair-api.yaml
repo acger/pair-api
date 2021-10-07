@@ -3,14 +3,14 @@ Host: 0.0.0.0
 Port: 50002
 Auth:
   AccessSecret: "kkr@kkr@kkr"
-  AccessExpire: 7200
+  AccessExpire: 7776000
 UserSvc:
   Etcd:
     Hosts:
-      - localhost:2379
+      - etcd.default.svc.cluster.local:2379
     Key: user.rpc
 PairSvc:
   Etcd:
     Hosts:
-      - localhost:2379
+      - etcd.default.svc.cluster.local:2379
     Key: pair.rpc

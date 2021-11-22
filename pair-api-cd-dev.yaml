@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: pair-api
-        image: docker.io/dk251626910/ffl-pair-api:latest
+        image: docker.io/dk251626910/ffl-pair-api-dev:latest
         lifecycle:
           preStop:
             exec:

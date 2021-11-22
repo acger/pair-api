@@ -1,0 +1,16 @@
+Name: pair-api
+Host: 0.0.0.0
+Port: 50002
+Auth:
+  AccessSecret: "kkr@kkr@kkr"
+  AccessExpire: 7776000
+UserSvc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc
+PairSvc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: pair.rpc

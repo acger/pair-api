@@ -1,14 +1,14 @@
-package logic
+package ele
 
 import (
 	"context"
 	"encoding/json"
-	"github.com/acger/pair-api/internal/svc"
-	"github.com/acger/pair-api/internal/types"
-	"github.com/acger/pair-svc/pairclient"
 	"github.com/jinzhu/copier"
 
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/acger/pair-api/internal/svc"
+	"github.com/acger/pair-api/internal/types"
+	"github.com/acger/pair-svc/pair"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type SaveElementLogic struct {
@@ -25,22 +25,13 @@ func NewSaveElementLogic(ctx context.Context, svcCtx *svc.ServiceContext) SaveEl
 	}
 }
 
-func (l *SaveElementLogic) SaveElement(req types.EleSaveReq) (*types.Rsp, error) {
+func (l *SaveElementLogic) SaveElement(req types.EleSaveReq) (resp *types.Rsp, err error) {
 	uid, _ := l.ctx.Value("userId").(json.Number).Int64()
-	ele := make([]*pairclient.Element, len(req.Element))
 
-	for i, e := range req.Element {
+	ele := &pair.Element{}
+	copier.Copy(ele, req.Element)
 
-		if e.Name == ""{
-			continue
-		}
-
-		et := pairclient.Element{}
-		copier.Copy(&et, e)
-		ele[i] = &et
-	}
-
-	r, err := l.svcCtx.PairSvc.ElementSave(l.ctx, &pairclient.EleSaveReq{
+	r, err := l.svcCtx.PairSvc.ElementSave(l.ctx, &pair.EleSaveReq{
 		Uid:     uint64(uid),
 		Element: ele,
 	})
@@ -54,4 +45,6 @@ func (l *SaveElementLogic) SaveElement(req types.EleSaveReq) (*types.Rsp, error)
 	}
 
 	return &types.Rsp{Code: 0}, nil
+
+	return
 }

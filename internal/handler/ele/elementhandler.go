@@ -1,17 +1,16 @@
-package handler
+package ele
 
 import (
 	"net/http"
 
-	"github.com/acger/pair-api/internal/logic/element"
+	"github.com/acger/pair-api/internal/logic/ele"
 	"github.com/acger/pair-api/internal/svc"
-	"github.com/tal-tech/go-zero/rest/httpx"
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func ElementHandler(ctx *svc.ServiceContext) http.HandlerFunc {
+func ElementHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
-		l := logic.NewElementLogic(r.Context(), ctx)
+		l := ele.NewElementLogic(r.Context(), svcCtx)
 		resp, err := l.Element()
 		if err != nil {
 			httpx.Error(w, err)

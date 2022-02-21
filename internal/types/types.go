@@ -14,21 +14,16 @@ type EleListReq struct {
 	Page     int64  `json:"page,default=1"`
 	PageSize int64  `json:"pageSize,default=30"`
 	Keyword  string `json:"keyword,optional"`
-	Mode     string `json:"mode,optional"`
 }
 
 type EleSaveReq struct {
-	Element []*Element `json:"element"`
+	Element *Element `json:"element"`
 }
 
 type EleRsp struct {
-	Code    int64      `json:"code"`
-	Message string     `json:"message"`
-	Element []*Element `json:"element"`
-}
-
-type PairReq struct {
-	Mode []string `json:"mode,optional"`
+	Code    int64    `json:"code"`
+	Message string   `json:"message"`
+	Element *Element `json:"element"`
 }
 
 type Rsp struct {
@@ -37,16 +32,16 @@ type Rsp struct {
 }
 
 type Element struct {
-	Name string `json:"name"`
-	Mode string `json:"mode,default=past"`
-	Star bool   `json:"star,optional"`
-	Sort int64  `json:"sort,optional"`
+	Skill     string `json:"skill,optional"`
+	SkillNeed string `json:"skill_need,optional"`
+	Star      bool   `json:"star,optional"`
+	Boost     int64  `json:"boost,optional"`
 }
 
 type UserElement struct {
-	Id      uint64     `json:"id"`
-	Name    string     `json:"name"`
-	Account string     `json:"account"`
-	Avatar  string     `json:"avatar"`
-	Element []*Element `json:"element"`
+	Id      uint64   `json:"id"`
+	Name    string   `json:"name"`
+	Account string   `json:"account"`
+	Avatar  string   `json:"avatar"`
+	Element *Element `json:"element"`
 }

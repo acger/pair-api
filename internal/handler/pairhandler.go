@@ -5,13 +5,12 @@ import (
 
 	"github.com/acger/pair-api/internal/logic"
 	"github.com/acger/pair-api/internal/svc"
-	"github.com/tal-tech/go-zero/rest/httpx"
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func pairHandler(ctx *svc.ServiceContext) http.HandlerFunc {
+func pairHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
-		l := logic.NewPairLogic(r.Context(), ctx)
+		l := logic.NewPairLogic(r.Context(), svcCtx)
 		resp, err := l.Pair()
 		if err != nil {
 			httpx.Error(w, err)

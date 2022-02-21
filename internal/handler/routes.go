@@ -4,35 +4,35 @@ package handler
 import (
 	"net/http"
 
-	element "github.com/acger/pair-api/internal/handler/element"
+	ele "github.com/acger/pair-api/internal/handler/ele"
 	"github.com/acger/pair-api/internal/svc"
 
-	"github.com/tal-tech/go-zero/rest"
+	"github.com/zeromicro/go-zero/rest"
 )
 
-func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
-	engine.AddRoutes(
+func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
+	server.AddRoutes(
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
 				Path:    "/pair/element/save",
-				Handler: element.SaveElementHandler(serverCtx),
+				Handler: ele.SaveElementHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/pair/element",
-				Handler: element.ElementHandler(serverCtx),
+				Handler: ele.ElementHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/pair/element/list",
-				Handler: element.ListElementHandler(serverCtx),
+				Handler: ele.ListElementHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)
 
-	engine.AddRoutes(
+	server.AddRoutes(
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,

@@ -1,4 +1,4 @@
-package logic
+package ele
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"github.com/acger/pair-api/internal/svc"
 	"github.com/acger/pair-api/internal/types"
 
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type ListElementLogic struct {
@@ -23,8 +23,8 @@ func NewListElementLogic(ctx context.Context, svcCtx *svc.ServiceContext) ListEl
 	}
 }
 
-func (l *ListElementLogic) ListElement(req types.EleListReq) (*types.EleListRsp, error) {
+func (l *ListElementLogic) ListElement(req types.EleListReq) (resp *types.EleListRsp, err error) {
 	// todo: add your logic here and delete this line
 
-	return &types.EleListRsp{}, nil
+	return
 }

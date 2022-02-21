@@ -1,13 +1,14 @@
-package logic
+package ele
 
 import (
 	"context"
 	"encoding/json"
+	"github.com/jinzhu/copier"
+
 	"github.com/acger/pair-api/internal/svc"
 	"github.com/acger/pair-api/internal/types"
-	"github.com/acger/pair-svc/pairclient"
-	"github.com/jinzhu/copier"
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/acger/pair-svc/pair"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type ElementLogic struct {
@@ -24,9 +25,9 @@ func NewElementLogic(ctx context.Context, svcCtx *svc.ServiceContext) ElementLog
 	}
 }
 
-func (l *ElementLogic) Element() (*types.EleRsp, error) {
+func (l *ElementLogic) Element() (resp *types.EleRsp, err error) {
 	uid, _ := l.ctx.Value("userId").(json.Number).Int64()
-	r, err := l.svcCtx.PairSvc.ElementView(l.ctx, &pairclient.EleViewReq{Uid: uint64(uid)})
+	r, err := l.svcCtx.PairSvc.ElementView(l.ctx, &pair.EleViewReq{Uid: uint64(uid)})
 
 	if err != nil {
 		return &types.EleRsp{Code: 1}, nil
@@ -36,13 +37,10 @@ func (l *ElementLogic) Element() (*types.EleRsp, error) {
 		return &types.EleRsp{Code: r.Code, Message: r.Message}, nil
 	}
 
-	ele := make([]*types.Element, len(r.Element))
 
-	for i, e := range r.Element {
-		et := types.Element{}
-		copier.Copy(&et, e)
-		ele[i] = &et
-	}
+	ele := &types.Element{}
+
+	copier.Copy(ele, r.Element)
 
 	return &types.EleRsp{Code: 0, Element: ele}, nil
 }
